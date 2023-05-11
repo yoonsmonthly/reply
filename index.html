@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>배달의 민족 댓글 생성기</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+        <link href="style.css" rel="stylesheet" >
+    </head>
+    <body>
+        <div class="container">
+            <div>
+                <label for="company">업체명</label>
+                <input type="text" id="company" class="company" value="오늘의홍식당">
+            </div>
+
+            <div id="categoryAreaName">댓글 만들기</div>
+            <div id="categoryArea">
+                <button id="mainText">기본댓글</button>
+                <button id="fiveStar">별점오점</button>
+                <button id="noVoiceStar">말X별점오점</button>
+                <button id="fourStar">별점사점</button>
+
+                <button id="photo">포토리뷰</button>
+                <button id="forgetPhoto">사진잊음</button>
+
+                <button id="first">첫주문</button>
+                <button id="second">재방문</button>
+                <button id="willsecond">재방문예정</button>
+                <button id="beforestore">매장방문</button>
+                <button id="dangol">단골손님</button>
+                <button id="willdangol">단골예약</button>
+                <button id="here">무조건여기</button>
+                <button id="service">서비스</button>
+                <button id="request">요청사항</button>
+
+                <button id="spicy">매운맛</button>
+                <button id="quicyDelivery">빠른배달</button>
+                <button id="full">양많음</button>
+
+                <button id="foreign" class="bad">이물질</button>
+                <button id="late" class="bad">배달늦음</button>
+                <button id="tasteLess" class="bad">맛없음</button>
+                <button id="source" class="bad">소스맛이상</button>
+                <button id="missevent" class="bad">이벤트누락</button>
+                <button id="miss" class="bad">누락</button>
+
+                <button id="chinese">중화요리</button>
+                <button id="jokbal">족발/보쌈</button>
+                <button id="mara">마라탕</button>
+            </div>
+
+            <div id="replyArea">
+                <div id="replyAreaName">댓글</div>
+                <!-- <input id="btnCopy" type="button" value="복사하기" /> -->
+                <div id="reply" name="reply" contenteditable="true"></div>
+            </div>
+
+            <div id="supportArea">
+                <div class="ballon">
+                    개발자에게 커피를 선물해주세요-
+                    댓글을 추가하는 힘이 됩니다 ❤
+                </div>
+                <a href="https://toss.me/월간윤땡땡/5000">
+                    <img src="./data/img/free-icon-coffee-cup.png" />
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            ⓒ 2023 yoonsmonthly    
+        </footer>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+    <script type="text/javascript">
+        let ment = {};
+
+        $('#categoryArea button').click(function() {
+            let company = $('#company').val();
+
+            if(company == '') {
+                company = '업체명을 입력해주세요';
+            }
+
+            const btnName = $(this).attr('id');
+            console.log(btnName)
+
+            const randomIndex = Math.floor(Math.random() * ment[btnName].length);
+            const randomData = ment[btnName][randomIndex];
+
+            const randomThanksIndex = Math.floor(Math.random() * ment['thanks'].length);
+            const randomThanksData = ment['thanks'][randomThanksIndex];
+            
+            
+            let reply = '안녕하세요, ' + '<span class="comName">' + company + '</span>' + '입니다 (●\'◡\'●)<br><br>';
+
+            reply += randomData + '<br><br>';
+            reply += randomThanksData;
+            reply = reply.replace(/company/gi, '<span class="comName">' + company + '</span>');
+
+            $('#reply').html(reply);
+        });
+
+        function readExcelReplys() {
+            const filePath = './data/xlsx/ment.xlsx';
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', filePath, true);
+            xhr.responseType = 'arraybuffer';
+            xhr.onload = function(e) {
+                const data = new Uint8Array(xhr.response);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const sheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[sheetName];
+                
+                const columnCount = XLSX.utils.decode_range(worksheet['!ref']).e.c + 1;
+                const range = XLSX.utils.decode_range(worksheet['!ref']);
+                for (let c = range.s.c; c <= range.e.c; c++) {
+                    const columnName = worksheet[XLSX.utils.encode_cell({r: range.s.r, c: c})].v;
+                    ment[columnName] = [];
+                    for (let r = range.s.r + 2; r <= range.e.r; r++) {
+                        const cell = worksheet[XLSX.utils.encode_cell({r: r, c: c})];
+                        if (!cell) {
+                        break;
+                        }
+                        ment[columnName].push(cell.v);
+                    }
+                    }
+                    console.log(ment);
+            };
+            xhr.send();
+        }
+
+        $(document).ready(function() {
+	        readExcelReplys();
+        });
+        
+    </script>
+</html>

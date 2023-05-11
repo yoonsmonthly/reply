@@ -1,0 +1,160 @@
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 25px;
+    color: #4e4e4e;
+}
+
+.container {
+    max-width: 980px;
+    margin: 0 auto;
+    margin-top: 30px;
+    position: relative;
+    padding: 0 15px;
+}
+
+input, #reply {
+  font-size: 25px;
+  width: 300px;
+  border: none;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  background: none;
+  z-index: 5;
+  text-align: center;
+}
+
+input:focus, #reply:focus { 
+    outline: none; 
+} 
+
+input {
+    border-bottom: solid #4e4e4e 1px;
+}
+
+#reply {
+    position: relative;
+    width: 100% !important;
+    box-sizing: border-box;
+    height: 300px;
+    text-align: left;
+    border-top: solid #4e4e4e 1px;
+    padding-top: 15px;
+}
+
+label {
+  font-size: 25px;
+  transition: all .2s;
+}
+
+#categoryAreaName, #replyAreaName {
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+#categoryArea button, #beforeBtn, #nextBtn {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    border-radius: 0px;
+    border: 1px solid #4e4e4e;
+    font-family: 'S-CoreDream-3Light';
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+#categoryArea button:hover {
+    background-color: #4e4e4e;
+    color: white;
+}
+
+#replyArea {
+    position: relative;
+}
+
+#supportArea {
+    position: fixed;
+    text-align: right;
+    bottom: 80px;
+    right: 30px;
+}
+
+#supportArea img {
+    max-width: 100px;
+    margin-top: 30px;
+    right: 0px;
+}
+
+.ballon {
+    width: 190px;
+    height: 31px;
+    right: 0px;
+    bottom: 130px;
+    background: #484848;
+    color: white;
+    border-radius: 5px;
+    padding: 12px 12px;
+    font-size: 13px;
+    position: absolute;
+}
+
+.ballon:after {
+    border-top: 10px solid #484848;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 0px solid transparent;
+    content: "";
+    top: 55px;
+    left: 160px;
+    position: absolute;
+}
+
+#btnCopy {
+    position: absolute;
+    top: 15px;
+    right: 5px;
+    font-family: 'S-CoreDream-3Light';
+    font-size: 15px;
+    width: auto;
+    border-bottom: none;
+}
+
+#btnCopy:hover {
+    font-weight: bolder;
+    color: darkslategrey;
+}
+
+#companyNum {
+    width: 100px;
+}
+
+#beforeBtn, #nextBtn {
+    height: 40px;
+}
+
+span.comName {
+    color: orange;
+    background: black;
+}
+
+footer {
+    bottom: 0px;
+    background-color: #4e4e4e;
+    color: white;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    font-size: 13px;
+    position: fixed;
+}
